@@ -66,24 +66,24 @@ with tab1:
     cat_filtered = txn_by_category[txn_by_category['state'] == selected_category_state]
 
     fig3, ax3 = plt.subplots(figsize=(10,6))
-    sns.barplot(data=cat_filtered, x='transaction_name', y='total_transactions', palette='pastel', ax=ax3)
+    sns.barplot(data=cat_filtered, x='transaction_type', y='total_transactions', palette='pastel', ax=ax3)
     ax3.set_title(f"Transaction Categories – {selected_category_state.title()}")
     plt.xticks(rotation=30)
     st.pyplot(fig3)
 
     st.markdown("### 🥧 India-Wide Category Share")
 
-    pie_data = txn_by_category.groupby("transaction_name")["total_transactions"].sum().reset_index()
+    pie_data = txn_by_category.groupby("transaction_type")["total_transactions"].sum().reset_index()
 
     fig4, ax4 = plt.subplots(figsize=(6,6))
-    ax4.pie(pie_data["total_transactions"], labels=pie_data["transaction_name"], autopct='%1.1f%%', startangle=140)
+    ax4.pie(pie_data["total_transactions"], labels=pie_data["transaction_type"], autopct='%1.1f%%', startangle=140)
     ax4.set_title("Overall Transaction Share by Category")
     ax4.axis("equal")
     st.pyplot(fig4)
 
     st.markdown("### 🔥 Heatmap: State vs Category")
 
-    pivot = txn_by_category.pivot(index='state', columns='transaction_name', values='total_transactions').fillna(0)
+    pivot = txn_by_category.pivot(index='state', columns='transaction_type', values='total_transactions').fillna(0)
     fig5, ax5 = plt.subplots(figsize=(14,10))
     sns.heatmap(pivot, cmap="YlGnBu", linewidths=0.5, ax=ax5)
     ax5.set_title("Heatmap: Transaction Categories by State")
