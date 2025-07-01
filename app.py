@@ -1,3 +1,8 @@
+import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
 # --- Define Tabs for Each Case Study ---
 tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "📊 Case Study 1 – Transaction Dynamics",
