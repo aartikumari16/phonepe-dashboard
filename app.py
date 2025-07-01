@@ -1,3 +1,12 @@
+# --- Define Tabs for Each Case Study ---
+tab1, tab2, tab3, tab4, tab5 = st.tabs([
+    "📊 Case Study 1 – Transaction Dynamics",
+    "🏢 Case Study 2 – [Your Title]",
+    "📍 Case Study 3 – [Your Title]",
+    "💳 Case Study 4 – [Your Title]",
+    "📈 Case Study 5 – [Your Title]"
+])
+
 # # ---------------- TAB 1 ---------------------
 with tab1:
     st.header("🏙️ Case Study 1: Decoding Transaction Dynamics on PhonePe")
