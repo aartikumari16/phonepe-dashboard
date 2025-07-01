@@ -12,6 +12,12 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "📈 Case Study 5 – [Your Title]"
 ])
 
+st.set_page_config(page_title="📊 PhonePe Dashboard", layout="wide")
+
+# Load your data files here
+txn_by_state = pd.read_csv("transaction_by_state.csv")
+quarterly_trend = pd.read_csv("quarterly_trend_by_state.csv")
+txn_by_category = pd.read_csv("transactions_by_state_category.csv")
 # # ---------------- TAB 1 ---------------------
 with tab1:
     st.header("🏙️ Case Study 1: Decoding Transaction Dynamics on PhonePe")
