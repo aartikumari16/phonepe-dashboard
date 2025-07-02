@@ -11,7 +11,7 @@ def run():
     device_engagement = pd.read_csv("device_users_by_brand.csv")
     state_users_by_device = pd.read_csv("state_users_by_device.csv")
     normalized_device_state = pd.read_csv("state_users_by_device.csv")
-    brand_quarterly = pd.read_csv("quarterly_brand_usage_trend.csv")
+    quarterly_brand_usage_trend = pd.read_csv("quarterly_brand_usage_trend.csv")
 
     # --- Visualization 1: Avg. App Open % ---
     st.subheader("📊 Avg. App Open % by Device Brand")
