@@ -9,7 +9,7 @@ def run():
 
     # Load data
     device_engagement = pd.read_csv("device_users_by_brand.csv")
-    top_devices_states = pd.read_csv("state_users_by_device.csv")
+    state_users_by_device = pd.read_csv("state_users_by_device.csv")
     normalized_device_state = pd.read_csv("state_users_by_device.csv")
     brand_quarterly = pd.read_csv("quarterly_brand_usage_trend.csv")
 
