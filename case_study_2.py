@@ -49,33 +49,66 @@ def run():
     ax3.set_xticklabels(device_engagement["brand"], rotation=45)
     st.pyplot(fig3)
 
-    # --- Visualization 4: Top Brands in Top 5 States ---
-    st.subheader("📍 Top Device Brands in Top 5 States")
-    fig4, ax4 = plt.subplots(figsize=(12, 6))
-    sns.barplot(data=top_devices_states, x="state", y="total_users", hue="brand", ax=ax4)
-    ax4.set_title("Top Device Brands in Top 5 States by Registered Users")
-    ax4.set_ylabel("Total Users")
-    ax4.set_xticklabels(ax4.get_xticklabels(), rotation=30)
+    # Get top 5 states by total users
+    top_states = state_users_by_device.groupby('state')['total_users'].sum().nlargest(5).index.tolist()
+    filtered_df = state_users_by_device[state_users_by_device['state'].isin(top_states)]
+
+    fig3, ax3 = plt.subplots(figsize=(12, 6))
+    sns.barplot(data=filtered_df, x='state', y='total_users', hue='brand', ax=ax3)
+    ax3.set_title("Top Device Brands in Top 5 States by Registered Users")
+    ax3.set_ylabel("Total Users")
+    ax3.set_xlabel("State")
+    ax3.set_xticklabels(ax3.get_xticklabels(), rotation=45)
+    ax3.legend(title="Brand", bbox_to_anchor=(1.05, 1), loc='upper left')
+    st.pyplot(fig3)
+
+    # --- Visualization 4: Heatmap – Brand Share by State (Normalized) ---
+    st.subheader("🌐 Device Brand Share by State (Normalized Heatmap)")
+
+    pivot_df = state_users_by_device.pivot(index='state', columns='brand', values='total_users').fillna(0)
+    normalized = pivot_df.div(pivot_df.sum(axis=1), axis=0)
+
+    fig4, ax4 = plt.subplots(figsize=(14, 10))
+    sns.heatmap(normalized, cmap='YlGnBu', linewidths=0.5, linecolor='gray', ax=ax4)
+    ax4.set_title("Device Brand Share by State (Normalized)")
+    ax4.set_xlabel("Brand")
+    ax4.set_ylabel("State")
     st.pyplot(fig4)
 
-    # --- Visualization 5: Heatmap (Normalized) ---
-    st.subheader("🌐 Device Brand Share by State (Normalized)")
-    heat_df = normalized_device_state.set_index("state")
-    fig5, ax5 = plt.subplots(figsize=(14, 10))
-    sns.heatmap(heat_df, cmap="YlGnBu", linewidths=0.5, ax=ax5)
-    ax5.set_title("Device Brand Share by State")
+    # --- Visualization 5: Line Chart – Quarterly Brand Usage Trend ---
+    st.subheader("📈 Quarterly Brand Usage Trend – Top Brands")
+
+    quarterly_brand_usage_trend['year_quarter'] = (
+        quarterly_brand_usage_trend['year'].astype(str) +
+        ' Q' +
+        quarterly_brand_usage_trend['quarter'].astype(str)
+    )
+
+    top_brands = ['Xiaomi', 'Samsung', 'Vivo']
+    df_trend_filtered = quarterly_brand_usage_trend[
+        quarterly_brand_usage_trend['brand'].isin(top_brands)
+    ]
+
+    fig5, ax5 = plt.subplots(figsize=(14, 6))
+    sns.lineplot(
+        data=df_trend_filtered,
+        x='year_quarter',
+        y='total_registered_users',
+        hue='brand',
+        marker='o',
+        ax=ax5
+    )
+    ax5.set_title('Quarterly Brand Usage Trend (Top Brands)')
+    ax5.set_xlabel('Year - Quarter')
+    ax5.set_ylabel('Total Registered Users')
+    plt.xticks(rotation=45)
     st.pyplot(fig5)
 
-    # --- Visualization 6: Quarterly Brand Usage Trend ---
-    st.subheader("📆 Quarterly Brand Usage Trend – Top Brands")
-    fig6, ax6 = plt.subplots(figsize=(14, 6))
-    brand_quarterly['year_quarter'] = brand_quarterly['year'].astype(str) + " Q" + brand_quarterly['quarter'].astype(str)
-    sns.lineplot(data=brand_quarterly, x="year_quarter", y="total_users", hue="brand", marker="o", ax=ax6)
-    ax6.set_title("Quarterly Brand Usage Trend (Top Brands)")
-    plt.xticks(rotation=45)
-    st.pyplot(fig6)
-
-    st.markdown("💡 **Insights:**")
-    st.markdown("- Xiaomi leads in both registrations and engagement.")
-    st.markdown("- Vivo shows rapid growth and engagement, especially in later quarters.")
-    st.markdown("- Regional preferences vary significantly for brands.")
+    # --- Final Insights ---
+    st.markdown("### 💡 Summary Insights")
+    st.markdown("""
+    - **Xiaomi** leads in both user base and app engagement, indicating strong brand-user affinity.
+    - **Samsung** maintains steady growth but trails behind in engagement.
+    - **Vivo** is gaining momentum with consistent growth in newer quarters.
+    - Brand popularity differs by state, and regional user behavior is evident from the heatmap.
+    """)
