@@ -5,7 +5,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-def render_case_study_1():
+def run():
     st.header("📊 Case Study 1: Decoding Transaction Dynamics on PhonePe")
 
     # Load CSVs (can be moved to main app and passed as arguments too)
