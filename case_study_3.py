@@ -11,12 +11,13 @@ def run():
     st.markdown("PhonePe aims to analyze **insurance transactions** across various states and districts to understand "
                 "the uptake of insurance services among users. This helps identify regional behavior and growth opportunities.")
 
-    # Load data
-    state_insurance = pd.read_csv("state_insurance.csv")
-    district_insurance_map = pd.read_csv("district_insurance_map.csv")
-    yearly_state_trend = pd.read_csv("state_insurance_trend.csv")
-    district_insurance_amount = pd.read_csv("top_insurance_district.csv")
+   # Load data
+    state_insurance = pd.read_csv("insurance_by_state.csv")
+    district_insurance_map = pd.read_csv("insurance_by_category.csv")
+    yearly_state_trend = pd.read_csv("insurance_trend_by_state.csv")
+    district_insurance_amount = pd.read_csv("top_districts_insurance.csv")
     state_insurance_amount = pd.read_csv("top_insurance_state.csv")
+
 
     # ------------------ Charts Row 1 ------------------
     col1, col2 = st.columns(2)
