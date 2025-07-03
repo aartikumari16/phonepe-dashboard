@@ -16,14 +16,14 @@ def run():
     district_insurance_map = pd.read_csv("insurance_by_category.csv")
     yearly_state_trend = pd.read_csv("insurance_trend_by_state.csv")
     district_insurance_amount = pd.read_csv("top_districts_insurance.csv")
-    state_insurance_amount = pd.read_csv("top_insurance_state.csv")
+    #state_insurance_amount = pd.read_csv("top_insurance_state.csv")
 
 
     # ------------------ Charts Row 1 ------------------
     col1, col2 = st.columns(2)
 
     with col1:
-        top_states = state_insurance_amount.sort_values(by='total_amount', ascending=False).head(10)
+        top_states = state_insurance.sort_values(by='total_amount', ascending=False).head(10)
         fig1, ax1 = plt.subplots(figsize=(8,5))
         sns.barplot(data=top_states, y='state', x='total_amount', palette='viridis', ax=ax1)
         ax1.set_title("Top 10 States by Insurance Transaction Amount")
