@@ -30,6 +30,7 @@ def run():
         st.pyplot(fig1)
 
     with col2:
+        
         top_districts = top_districts_insurance.sort_values(by='total_insurance_amount', ascending=False).head(10)
         fig2, ax2 = plt.subplots(figsize=(8,5))
         sns.barplot(data=top_districts, y='district', x='total_insurance_amount', palette='rocket', ax=ax2)
@@ -64,7 +65,9 @@ def run():
     # ------------------ District Heatmap ------------------
     st.markdown("### 🔥 District-Level Heatmap")
 
-    pivot = insurance_by_category.pivot(index='district', columns='state', values='total_insurance_transactions').fillna(0)
+    top_districts = insurance_by_category.nlargest(25, "total_insurance_transactions")
+    pivot = top_districts.pivot(index="district", columns="state", values="total_insurance_transactions").fillna(0)
+    #pivot = insurance_by_category.pivot(index='district', columns='state', values='total_insurance_transactions').fillna(0)
     fig5, ax5 = plt.subplots(figsize=(14,10))
     sns.heatmap(pivot, cmap='YlGnBu', linewidths=0.3, linecolor='gray', ax=ax5)
     ax5.set_title("District-wise Insurance Transaction Heatmap (Top 25 Districts)")
