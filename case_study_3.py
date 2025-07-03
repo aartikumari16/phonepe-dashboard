@@ -32,7 +32,7 @@ def run():
     with col2:
         top_districts = top_districts_insurance.sort_values(by='total_insurance_amount', ascending=False).head(10)
         fig2, ax2 = plt.subplots(figsize=(8,5))
-        sns.barplot(data=top_districts, y='district_label', x='total_insurance_amount', palette='rocket', ax=ax2)
+        sns.barplot(data=top_districts, y='district', x='total_insurance_amount', palette='rocket', ax=ax2)
         ax2.set_title("Top 10 Districts by Insurance Transaction Amount")
         ax2.set_xlabel("Total Insurance Amount (₹)")
         st.pyplot(fig2)
